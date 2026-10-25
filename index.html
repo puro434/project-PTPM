@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>Test App</title></head>
+<body>
+  <!-- РЕГИСТРАЦИЯ (Пр_4) -->
+  <section id="register">
+    <h2>Регистрация</h2>
+    <input id="email_create" placeholder="Email">
+    <button id="SubmitCreate" onclick="showRegisterForm()">Create an account</button>
+    <form id="registerForm" style="display:none" onsubmit="return doRegister(event)">
+      <input id="customer_firstname" placeholder="First Name" required>
+      <input id="customer_lastname" placeholder="Last Name" required>
+      <input id="passwd" type="password" placeholder="Password" required>
+      <input id="address1" placeholder="Address" required>
+      <input id="city" placeholder="City" required>
+      <input id="postcode" placeholder="Zip Code" required>
+      <input id="phone_mobile" placeholder="Phone" required>
+      <button id="submitAccount" type="submit">Register</button>
+    </form>
+    <div id="registerMsg"></div>
+  </section>
+
+  <!-- ЛОГИН (Пр_5) -->
+  <section id="login">
+    <h2>Логин</h2>
+    <form onsubmit="return doLogin(event)">
+      <input id="email" placeholder="Email" required>
+      <input id="passwd_login" type="password" placeholder="Password" required>
+      <button id="SubmitLogin" type="submit">Login</button>
+    </form>
+    <div id="loginMsg"></div>
+  </section>
+
+  <!-- TO-DO (Пр_7) -->
+  <section id="todo">
+    <h2>To-Do</h2>
+    <input id="taskInput" placeholder="Новая задача">
+    <button id="addBtn" onclick="addTask()">Добавить</button>
+    <ul id="taskList"></ul>
+  </section>
+
+  <!-- DYNAMIC (Пр_9) -->
+  <section id="dynamic_loading">
+    <h2>Dynamic Loading</h2>
+    <div id="start"><button onclick="loadDynamic()">Start</button></div>
+    <div id="finish" style="display:none"><h4>Hello World!</h4></div>
+  </section>
+
+  <script>
+    function showRegisterForm() {
+      document.getElementById('registerForm').style.display = 'block';
+    }
+    function doRegister(e) {
+      e.preventDefault();
+      const email = document.getElementById('email_create').value;
+      const pw = document.getElementById('passwd').value;
+      const msg = document.getElementById('registerMsg');
+      if (!email.includes('@') || pw.length < 6) {
+        msg.textContent = 'Ошибка регистрации';
+        return false;
+      }
+      msg.textContent = 'Успешная регистрация';
+      window.location.hash = '#my-account';
+      return false;
+    }
+    function doLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const pw = document.getElementById('passwd_login').value;
+      const msg = document.getElementById('loginMsg');
+      if (email === 'test_user_123@mail.com' && pw === 'Passw0rd!') {
+        msg.textContent = 'OK';
+        window.location.hash = '#my-account';
+      } else {
+        msg.textContent = 'Ошибка логина';
+      }
+      return false;
+    }
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      if (!input.value.trim()) return;
+      const li = document.createElement('li');
+      li.textContent = input.value.trim();
+      document.getElementById('taskList').appendChild(li);
+      input.value = '';
+    }
+    function loadDynamic() {
+      setTimeout(() => {
+        document.getElementById('finish').style.display = 'block';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
